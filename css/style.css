@@ -146,20 +146,67 @@ a {
     background-color: transparent;
 }
 
+.btn-updateDep {/*удалить*/
+    border: 2px solid rgba(243, 194, 84, 0.82);
+    color: #ff6a00 !important;
+    background-color: transparent;
+}
 .btn-delete {/*удалить*/
-    border: 2px solid rgba(197, 53, 53, 0.82);
+    border: 2px solid rgba(255, 65, 65, 0.82);
     color: #ff0000 !important;
     background-color: transparent;
 }
-table{
-    border-collapse: collapse;
-    border-spacing: 0;
+.btn-add {/*удалить*/
+    border: 2px solid rgba(79, 197, 74, 0.82);
+    color: #006935 !important;
+    background-color: transparent;
 }
-th, td{
+
+table {
+    border-spacing: 0;
+    empty-cells: hide;
+}
+td {
     padding: 10px 20px;
-    border: 1px solid #000;
+    text-align: center;
+    border-bottom: 1px solid #F4EEE8;
+    transition: all 0.5s linear;
+}
+td:first-child {
+    text-align: left;
+    color: #3D3511;
+    font-weight: bold;
+}
+th {
+    padding: 10px 20px;
+    color: #3D3511;
+    border-bottom: 1px solid #F4EEE8;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.round-top {
+    border-top-left-radius: 10px;
+}
+.round-bottom {
+    border-bottom-left-radius: 10px;
+}
+tr:hover td{
+    background: #D1C7BF;
+    font-weight: bold;
 }
 input[type="text"] {
     border: 1px solid black;
     border-radius: 5px;
+}
+
+
+
+/* стилизация содержимого страницы */
+body {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+    background-color: #fff;
 }

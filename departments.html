@@ -5,6 +5,7 @@
     <title>Демо ОК</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/left-nav-style.css">
+    <link rel="stylesheet" href="css/modalForm.css">
 </head>
 <body>
 <!--
@@ -55,6 +56,19 @@
 Далее размещаем любую разметку,
 много слов, картинки и т.д...
 -->
+<div id="openModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Редактирование</h3>
+                <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 <main role="main">
     <article>
         <header>
@@ -64,27 +78,25 @@
             <div id="Departments">
 
             </div>
-            <button class="btn btn-update" onclick="getDepartments()">Обновить таблицу</button>
+            <button class="btn btn-update" onclick="getDepartments()">Обновить список</button>
             <script src="js/Departments.js">getDepartments()</script>
 
         </section>
         <hr>
     </article>
-
     <article>
         <header>
             <h1 class="header__title">Добавить Отдел:</h1>
         </header>
         <section>
             <p>
-                <input type="text" id="name" placeholder="name">
-                <input type="text" id="abbreviation" placeholder="abbreviation">
-                <input type="text" id="description" placeholder="description">
+                <input type="text" id="jName" placeholder="name">
+                <input type="text" id="jAbbreviation" placeholder="abbreviation">
+                <input type="text" id="jDescription" placeholder="description">
             </p>
+            <button class="btn btn-add" onclick=clickAdd()>Добавать</button>
 
-            <button class="btn btn-update" onclick="saveDepartment()">Добавать</button>
             <script src="js/Departments.js">getDepartments()</script>
-
         </section>
         <hr>
     </article>
