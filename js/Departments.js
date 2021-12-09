@@ -28,14 +28,17 @@ async function getDepartments() {
     let heading_2 = document.createElement('th');
     heading_2.innerHTML = "name";
     let heading_3 = document.createElement('th');
-    heading_3.innerHTML = "description";
+    heading_3.innerHTML = "abbreviation";
     let heading_4 = document.createElement('th');
-    heading_4.innerHTML = "dateOfDepartmentCreation";
+    heading_4.innerHTML = "description";
+    let heading_5 = document.createElement('th');
+    heading_5.innerHTML = "dateOfDepartmentCreation";
 
     row_1.appendChild(heading_1);
     row_1.appendChild(heading_2);
     row_1.appendChild(heading_3);
     row_1.appendChild(heading_4);
+    row_1.appendChild(heading_5);
 
     thead.appendChild(row_1);
 
@@ -49,11 +52,13 @@ async function getDepartments() {
         let rowData2 = document.createElement('td');
         rowData2.innerHTML = dep.name;
         let rowData3 = document.createElement('td');
-        rowData3.innerHTML = dep.description;
+        rowData3.innerHTML = dep.abbreviation;
         let rowData4 = document.createElement('td');
-        rowData4.innerHTML = dep.dateOfDepartmentCreation;
-
+        rowData4.innerHTML = dep.description;
         let rowData5 = document.createElement('td');
+        rowData5.innerHTML = dep.dateOfDepartmentCreation;
+
+        let rowData6 = document.createElement('td');
         let btnUpdate = document.createElement("button");
         const textUpd = document.createTextNode("Редактировать");
         btnUpdate.appendChild(textUpd);
@@ -61,9 +66,9 @@ async function getDepartments() {
             updateDep(dep);
         };
         btnUpdate.className = "btn btn-updateDep";
-        rowData5.appendChild(btnUpdate);
+        rowData6.appendChild(btnUpdate);
 
-        let rowData6 = document.createElement('td');
+        let rowData7 = document.createElement('td');
         let btnDelete = document.createElement("button");
         const textDel = document.createTextNode("Удалить");
         btnDelete.appendChild(textDel);
@@ -71,7 +76,7 @@ async function getDepartments() {
             deleteDep(dep.id)
         };
         btnDelete.className = "btn btn-delete";
-        rowData6.appendChild(btnDelete);
+        rowData7.appendChild(btnDelete);
 
         rowNext.appendChild(rowData1);
         rowNext.appendChild(rowData2);
@@ -79,33 +84,43 @@ async function getDepartments() {
         rowNext.appendChild(rowData4);
         rowNext.appendChild(rowData5);
         rowNext.appendChild(rowData6);
+        rowNext.appendChild(rowData7);
 
         tbody.appendChild(rowNext);
     }
 }
 
 async function updateDep(dep) {
-    let modal = document.getElementById("modal-body");
-    modal.innerHTML = '<input type="text" value="' + dep.name + '" id="newName" placeholder="name">\n' +
-        '                <input type="text" value="' + dep.abbreviation + '" id="newAbbreviation" placeholder="abbreviation">\n' +
-        '                <input type="text" value="' + dep.description + '" id="newDescription" placeholder="description">\n' +
-        '                <button class="btn btn-add" onclick=updateSub(' +dep.id + ')>Применить</button>';
+    let n = document.getElementById("newName");
+    let a = document.getElementById("newAbbreviation");
+    let d = document.getElementById("newDescription");
+
+    n.value = dep.name;
+    a.value = dep.abbreviation;
+    d.value = dep.description;
+
+    document.getElementById("btnUpd").onclick = function() {
+        updateSub(dep.id)
+    };
     window.location.href = "departments.html#openModal";
 }
 
 async function updateSub(id) {
-    //не видит значение new
+    let n = document.getElementById("newName");
+    let a = document.getElementById("newAbbreviation");
+    let d = document.getElementById("newDescription");
+
     let dep = {
         id: id,
-        name: document.getElementById("newName").value,
-        abbreviation: document.getElementById("newAbbreviation").value,
-        description: document.getElementById("newDescription").value
+        name: n.value,
+        abbreviation: a.value,
+        description: d.value
     };
     console.log(id, document.getElementById("newName").value,
         document.getElementById("newAbbreviation").value,
         document.getElementById("newDescription").value);
     console.log(JSON.stringify(dep));
-    const response = await fetch(url + 'subdivision/Department/save', {
+    const response = await fetch(url + 'subdivision/update', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dep)

@@ -64,7 +64,10 @@
                 <a href="#close" title="Close" class="close">×</a>
             </div>
             <div id="modal-body" class="modal-body">
-
+                <input type="text" id="newName" placeholder="name">
+                <input type="text" id="newAbbreviation" placeholder="abbreviation">
+                <input type="text" id="newDescription" placeholder="description">
+                <button id="btnUpd" class="btn btn-add" >Применить</button>
             </div>
         </div>
     </div>
@@ -79,8 +82,6 @@
 
             </div>
             <button class="btn btn-update" onclick="getDepartments()">Обновить список</button>
-            <script src="js/Departments.js">getDepartments()</script>
-
         </section>
         <hr>
     </article>
@@ -95,11 +96,10 @@
                 <input type="text" id="jDescription" placeholder="description">
             </p>
             <button class="btn btn-add" onclick=clickAdd()>Добавать</button>
-
-            <script src="js/Departments.js">getDepartments()</script>
         </section>
         <hr>
     </article>
 </main>
+<script src="js/Departments.js">getDepartments()</script>
 </body>
 </html>
