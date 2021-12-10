@@ -1,16 +1,14 @@
 var url = 'http://178.150.196.140:8085/HumanResourcesDepartment/';
+getFaculty();
 
-getDepartments();
-
-
-async function getDepartments() {
-    const response = await fetch(url + 'subdivision/department/getDepartment', {
+async function getFaculty() {
+    const response = await fetch(url + 'subdivision/faculty/getFaculty', {
         method: 'POST',
         headers: {
             'Content-Type': 'charset=UTF-8',
         }
     });
-    const departments = await response.json()
+    const faculties = await response.json()
 
     let table = document.createElement('table');
     let thead = document.createElement('thead');
@@ -18,9 +16,9 @@ async function getDepartments() {
 
     table.appendChild(thead);
     table.appendChild(tbody);
-    let elmDep = document.getElementById('Departments');
-    elmDep.innerHTML = '';
-    elmDep.appendChild(table);
+    let elmFac = document.getElementById('Faculty');
+    elmFac.innerHTML = '';
+    elmFac.appendChild(table);
 
     let row_1 = document.createElement('tr');
     let heading_1 = document.createElement('th');
@@ -42,28 +40,28 @@ async function getDepartments() {
 
     thead.appendChild(row_1);
 
-    for (let i = 0; i < departments.length; i++) {
-        let dep = departments[i];
+    for (let i = 0; i < faculties.length; i++) {
+        let fac = faculties[i];
 
         let rowNext = document.createElement('tr');
         let rowData1 = document.createElement('td');
-        rowData1.innerHTML = dep.id;
+        rowData1.innerHTML = fac.id;
         rowData1.id
         let rowData2 = document.createElement('td');
-        rowData2.innerHTML = dep.name;
+        rowData2.innerHTML = fac.name;
         let rowData3 = document.createElement('td');
-        rowData3.innerHTML = dep.abbreviation;
+        rowData3.innerHTML = fac.abbreviation;
         let rowData4 = document.createElement('td');
-        rowData4.innerHTML = dep.description;
+        rowData4.innerHTML = fac.description;
         let rowData5 = document.createElement('td');
-        rowData5.innerHTML = dep.dateOfDepartmentCreation;
+        rowData5.innerHTML = fac.dateOfDepartmentCreation;
 
         let rowData6 = document.createElement('td');
         let btnUpdate = document.createElement("button");
         const textUpd = document.createTextNode("Редактировать");
         btnUpdate.appendChild(textUpd);
         btnUpdate.onclick = function () {
-            btnUpdateDep(dep);
+            updateFac(fac);
         };
         btnUpdate.className = "btn btn-updateDep";
         rowData6.appendChild(btnUpdate);
@@ -73,8 +71,7 @@ async function getDepartments() {
         const textDel = document.createTextNode("Удалить");
         btnDelete.appendChild(textDel);
         btnDelete.onclick = function () {
-            deleteSub(dep.id)
-            getDepartments();
+            deleteSub(fac.id)
         };
         btnDelete.className = "btn btn-delete";
         rowData7.appendChild(btnDelete);
@@ -92,41 +89,41 @@ async function getDepartments() {
 }
 
 //Кнопка "редактировать"
-async function btnUpdateDep(dep) {
+async function updateFac(fac) {
     let n = document.getElementById("newName");
     let a = document.getElementById("newAbbreviation");
     let d = document.getElementById("newDescription");
 
-    n.value = dep.name;
-    a.value = dep.abbreviation;
-    d.value = dep.description;
+    n.value = fac.name;
+    a.value = fac.abbreviation;
+    d.value = fac.description;
 
-    window.location.href = "departments.html#openModal";
-    //Кнопка "Применить" в выпадающем Модел
     document.getElementById("btnUpd").onclick = function() {
-        updateSub(dep.id)
+        //Кнопка "Применить" в выпадающем Модел
+        updateSub(fac.id)
     };
+    window.location.href = "FacultyChair.html#openModal";
 }
 
 //{"name":"Depart1","abbreviation":"ABVRT","description":"Descript"}
 //Кнопка Добавить
-async function saveDepartment() {
+async function saveFaculty() {
     let jName = document.getElementById("jName").value;
     let jAbbreviation = document.getElementById("jAbbreviation").value;
     let jDescription = document.getElementById("jDescription").value;
 
-    let dep = {
+    let fac = {
         name: jName,
         abbreviation: jAbbreviation,
         description: jDescription
     };
     console.log(jName, jAbbreviation, jDescription);
-    console.log(JSON.stringify(dep));
-    const response = await fetch(url + 'subdivision/Department/save', {
+    console.log(JSON.stringify(fac));
+    const response = await fetch(url + 'subdivision/faculty/save', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(dep)
+        body: JSON.stringify(fac)
     });
     console.log(response);
-    getDepartments();
+    getFaculty();
 }

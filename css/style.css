@@ -43,7 +43,7 @@ body {
 }
 
 main {
-    max-width: 1024px;
+    max-width: 2048px;
     margin: 0 auto
 }
 
@@ -140,13 +140,13 @@ a {
     -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
     box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
 }
-.btn-update {/*обновить*/
+.btn-update {/*обновить список*/
     border: 2px solid #2BBBAD;
     color: #00695c!important;
     background-color: transparent;
 }
 
-.btn-updateDep {/*удалить*/
+.btn-updateDep {/*Редактировать*/
     border: 2px solid rgba(243, 194, 84, 0.82);
     color: #ff6a00 !important;
     background-color: transparent;
@@ -156,51 +156,16 @@ a {
     color: #ff0000 !important;
     background-color: transparent;
 }
-.btn-add {/*удалить*/
+.btn-add {/*Добавить*/
     border: 2px solid rgba(79, 197, 74, 0.82);
     color: #006935 !important;
     background-color: transparent;
 }
-
-table {
-    border-spacing: 0;
-    empty-cells: hide;
-}
-td {
-    padding: 10px 20px;
-    text-align: center;
-    border-bottom: 1px solid #F4EEE8;
-    transition: all 0.5s linear;
-}
-td:first-child {
-    text-align: left;
-    color: #3D3511;
-    font-weight: bold;
-}
-th {
-    padding: 10px 20px;
-    color: #3D3511;
-    border-bottom: 1px solid #F4EEE8;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.round-top {
-    border-top-left-radius: 10px;
-}
-.round-bottom {
-    border-bottom-left-radius: 10px;
-}
-tr:hover td{
-    background: #D1C7BF;
-    font-weight: bold;
-}
 input[type="text"] {
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 7px;
+    padding:10px;
 }
-
-
-
 /* стилизация содержимого страницы */
 body {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
