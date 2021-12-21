@@ -1,7 +1,24 @@
 var url = 'http://178.150.196.140:8085/HumanResourcesDepartment/';
 
-//Кнопка "Применить" в выпадающем Модел
-async function updateSub(id) {
+//Кнопка "редактировать"
+async function btnUpdateSub(dep) {
+    let n = document.getElementById("newName");
+    let a = document.getElementById("newAbbreviation");
+    let d = document.getElementById("newDescription");
+
+    n.value = dep.name;
+    a.value = dep.abbreviation;
+    d.value = dep.description;
+
+    window.location.href = "departments.html#openModal";
+    //Кнопка "Применить" в выпадающем Модел
+    document.getElementById("btnUpd").onclick = function () {
+        updateSub(dep.id)
+    };
+}
+
+//Кнопка "Применить" в выпадающем Модел в "Редактировать"
+async function updateSub(id, isChair, idFac) {
     let n = document.getElementById("newName");
     let a = document.getElementById("newAbbreviation");
     let d = document.getElementById("newDescription");
@@ -16,27 +33,30 @@ async function updateSub(id) {
         document.getElementById("newAbbreviation").value,
         document.getElementById("newDescription").value);
     console.log(JSON.stringify(dep));
-    const response = await fetch(url + 'subdivision/update', {
+    const response = await fetch(url + 'subdivision/UpdateSub', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dep)
     });
     console.log(response);
     window.location.href = (location.href + "#close");
-    updateЕheList()
+    updateTheList(isChair, idFac)
 }
 
-async function deleteSub(id) {
-    const response = await fetch(url + 'subdivision/delete?id=' + id, {
+async function deleteSub(id, isChair, idFac) {
+    const response = await fetch(url + 'subdivision/DeleteSub?id=' + id, {
         method: 'DELETE',
         headers: {'Accept': 'charset=UTF-8'}
     });
-    updateЕheList()
+    console.log(response);
+    updateTheList(isChair, idFac);
 }
 
 //Обновляет Список
-async function updateЕheList(){
-    if (location.pathname == '/HRTest/departments.html')
+async function updateTheList(isChair, idFac) {
+    if (isChair == true)
+        getChair(idFac);
+    else if (location.pathname == '/HRTest/departments.html')
         getDepartments();
     else if (location.pathname == '/HRTest/FacultyChair.html')
         getFaculty();

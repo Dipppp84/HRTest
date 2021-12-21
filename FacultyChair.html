@@ -27,7 +27,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Редактирование</h3>
+                <h3 id="modal-title" class="modal-title">Редактирование</h3>
                 <a href="#close" title="Close" class="close">×</a>
             </div>
             <div id="modal-body" class="modal-body">
@@ -40,7 +40,7 @@
     </div>
 </div>
 <main role="main">
-    <article>
+    <!--<article>
         <header>
             <h1 class="header__title">Добавить Факультет:</h1>
         </header>
@@ -53,14 +53,15 @@
             </div>
         </section>
         <hr>
-    </article>
+    </article>-->
     <article>
         <header>
             <h1 class="header__title">Факультеты:</h1>
         </header>
         <section>
-            <button id class="btn btn-update" onclick="getFaculty()">Обновить список</button>
-            <div id="Faculty"></div>
+            <button class="btn btn-update" onclick="getFaculty()">Обновить список</button>
+            <button id="btn btn-add" class="btn btn-add">Добавить Факультет</button>
+            <div id="Faculty"></div> <!--тут создаёться таблица-->
         </section>
         <hr>
     </article>

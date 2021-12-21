@@ -63,7 +63,7 @@ async function getDepartments() {
         const textUpd = document.createTextNode("Редактировать");
         btnUpdate.appendChild(textUpd);
         btnUpdate.onclick = function () {
-            btnUpdateDep(dep);
+            btnUpdateSub(dep);
         };
         btnUpdate.className = "btn btn-updateDep";
         rowData6.appendChild(btnUpdate);
@@ -91,29 +91,11 @@ async function getDepartments() {
     }
 }
 
-//Кнопка "редактировать"
-async function btnUpdateDep(dep) {
-    let n = document.getElementById("newName");
-    let a = document.getElementById("newAbbreviation");
-    let d = document.getElementById("newDescription");
-
-    n.value = dep.name;
-    a.value = dep.abbreviation;
-    d.value = dep.description;
-
-    window.location.href = "departments.html#openModal";
-    //Кнопка "Применить" в выпадающем Модел
-    document.getElementById("btnUpd").onclick = function() {
-        updateSub(dep.id)
-    };
-}
-
-//{"name":"Depart1","abbreviation":"ABVRT","description":"Descript"}
 //Кнопка Добавить
 async function saveDepartment() {
-    let jName = document.getElementById("jName").value;
-    let jAbbreviation = document.getElementById("jAbbreviation").value;
-    let jDescription = document.getElementById("jDescription").value;
+    let jName = document.getElementById("jName");
+    let jAbbreviation = document.getElementById("jAbbreviation");
+    let jDescription = document.getElementById("jDescription");
 
     let dep = {
         name: jName,
@@ -127,6 +109,9 @@ async function saveDepartment() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dep)
     });
+    jName.value = '';
+    jAbbreviation.value = '';
+    jDescription.value = '';
     console.log(response);
     getDepartments();
 }
