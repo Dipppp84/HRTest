@@ -40,79 +40,98 @@ async function getFaculty() {
 
     thead.appendChild(row_1);
 
-    for (let i = 0; i < faculties.length; i++) {
-        let fac = faculties[i];
-
+    if (faculties.length == 0) {
         let rowNext = document.createElement('tr');
         let rowData1 = document.createElement('td');
-        rowData1.innerHTML = fac.id;
-        rowData1.id
+        rowData1.textContent = "";
         let rowData2 = document.createElement('td');
-        rowData2.innerHTML = fac.name;
-        let rowData3 = document.createElement('td');
-        rowData3.innerHTML = fac.abbreviation;
-        let rowData4 = document.createElement('td');
-        rowData4.innerHTML = fac.description;
-        let rowData5 = document.createElement('td');
-        rowData5.innerHTML = fac.dateOfDepartmentCreation;
-
-        let rowData6 = document.createElement('td');
-        let btnUpdate = document.createElement("button");
-        const textUpd = document.createTextNode("Редактировать");
-        btnUpdate.appendChild(textUpd);
-        btnUpdate.onclick = function () {
-            updateFacOrChr(fac);
-        };
-        btnUpdate.className = "btn btn-updateDep";
-        rowData6.appendChild(btnUpdate);
-
-        let rowData7 = document.createElement('td');
-        let btnGetChair = document.createElement("button");
-        const textBtnGetChair = document.createTextNode("Кафедры");
-        btnGetChair.appendChild(textBtnGetChair);
-        btnGetChair.onclick = function () {
-            getChair(fac.id);
-        };
-        btnGetChair.className = "btn btn-updateDep";
-        rowData7.appendChild(btnGetChair);
-
-        let rowData8 = document.createElement('td');
-        let btnDelete = document.createElement("button");
-        const textDel = document.createTextNode("Удалить");
-        btnDelete.appendChild(textDel);
-        btnDelete.onclick = function () {
-            deleteSub(fac.id)
-        };
-        btnDelete.className = "btn btn-delete";
-        rowData8.appendChild(btnDelete);
-
+        rowData2.textContent = "Пусто";
         rowNext.appendChild(rowData1);
         rowNext.appendChild(rowData2);
-        rowNext.appendChild(rowData3);
-        rowNext.appendChild(rowData4);
-        rowNext.appendChild(rowData5);
-        rowNext.appendChild(rowData6);
-        rowNext.appendChild(rowData7);
-        rowNext.appendChild(rowData8);
 
         tbody.appendChild(rowNext);
+    } else {
+        for (let i = 0; i < faculties.length; i++) {
+            let fac = faculties[i];
+
+            let rowNext = document.createElement('tr');
+            let rowData1 = document.createElement('td');
+            rowData1.innerHTML = fac.id;
+            rowData1.id
+            let rowData2 = document.createElement('td');
+            rowData2.innerHTML = fac.name;
+            let rowData3 = document.createElement('td');
+            rowData3.innerHTML = fac.abbreviation;
+            let rowData4 = document.createElement('td');
+            rowData4.innerHTML = fac.description;
+            let rowData5 = document.createElement('td');
+            rowData5.innerHTML = fac.dateOfDepartmentCreation;
+
+            let rowData6 = document.createElement('td');
+            let btnUpdate = document.createElement("button");
+            const textUpd = document.createTextNode("Редактировать");
+            btnUpdate.appendChild(textUpd);
+            btnUpdate.onclick = function () {
+                updateFacOrChr(fac);
+            };
+            btnUpdate.className = "btn btn-updateDep";
+            rowData6.appendChild(btnUpdate);
+
+            let rowData7 = document.createElement('td');
+            let btnGetChair = document.createElement("button");
+            const textBtnGetChair = document.createTextNode("Кафедры");
+            btnGetChair.appendChild(textBtnGetChair);
+            btnGetChair.onclick = function () {
+                getChair(fac);
+            };
+            btnGetChair.className = "btn btn-updateDep";
+            rowData7.appendChild(btnGetChair);
+
+            let rowData8 = document.createElement('td');
+            let btnDelete = document.createElement("button");
+            const textDel = document.createTextNode("Удалить");
+            btnDelete.appendChild(textDel);
+            btnDelete.onclick = function () {
+                deleteSub(fac.id)
+            };
+            btnDelete.className = "btn btn-delete";
+            rowData8.appendChild(btnDelete);
+
+            rowNext.appendChild(rowData1);
+            rowNext.appendChild(rowData2);
+            rowNext.appendChild(rowData3);
+            rowNext.appendChild(rowData4);
+            rowNext.appendChild(rowData5);
+            rowNext.appendChild(rowData6);
+            rowNext.appendChild(rowData7);
+            rowNext.appendChild(rowData8);
+
+            tbody.appendChild(rowNext);
+        }
     }
+    //Надпись в Шапке
+    let title = document.getElementById("header__title");
+    title.textContent = "Факультеты:";
+
+    //Кнопка "Обновить Список"
+    let btnUpd = document.getElementById("btn btn-update");
+    btnUpd.textContent = "Обновить список";
 
     //Кнопка "Добавить Факультет"
-    let btnUpd = document.getElementById("btn btn-add");
-    btnUpd.textContent = "Добавить Факультет";
-    btnUpd.onclick = function () {
+    let btnAdd = document.getElementById("btn btn-add");
+    btnAdd.textContent = "Добавить Факультет";
+    btnAdd.onclick = function () {
         addFac();
     };
 }
 
-async function getChair(idFac) {
+async function getChair(fac) {
     const response = await fetch(url + 'subdivision/faculty/GetChair', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        body: ("id=" + idFac)
+        body: ("id=" + fac.id)
     });
     const chair = await response.json();
 
@@ -148,82 +167,103 @@ async function getChair(idFac) {
 
     thead.appendChild(row_1);
 
-    for (let i = 0; i < chair.length; i++) {
-        let chr = chair[i];
-
+    if (chair.length == 0) {
         let rowNext = document.createElement('tr');
         let rowData1 = document.createElement('td');
-        rowData1.innerHTML = chr.id;
-        rowData1.id
+        rowData1.textContent = "";
         let rowData2 = document.createElement('td');
-        rowData2.innerHTML = chr.name;
-        let rowData3 = document.createElement('td');
-        rowData3.innerHTML = chr.abbreviation;
-        let rowData4 = document.createElement('td');
-        rowData4.innerHTML = chr.description;
-        let rowData5 = document.createElement('td');
-        rowData5.innerHTML = chr.dateOfDepartmentCreation;
-
-        let rowData6 = document.createElement('td');
-        let btnUpdate = document.createElement("button");
-        const textUpd = document.createTextNode("Редактировать");
-        btnUpdate.appendChild(textUpd);
-        btnUpdate.onclick = function () {
-            updateFacOrChr(chr, true, idFac);
-        };
-        btnUpdate.className = "btn btn-updateDep";
-        rowData6.appendChild(btnUpdate);
-
-        let rowData8 = document.createElement('td');
-        let btnDelete = document.createElement("button");
-        const textDel = document.createTextNode("Удалить");
-        btnDelete.appendChild(textDel);
-        btnDelete.onclick = function () {
-            deleteSub(chr.id)
-        };
-        btnDelete.className = "btn btn-delete";
-        rowData8.appendChild(btnDelete);
-
+        rowData2.textContent = "Пусто";
         rowNext.appendChild(rowData1);
         rowNext.appendChild(rowData2);
-        rowNext.appendChild(rowData3);
-        rowNext.appendChild(rowData4);
-        rowNext.appendChild(rowData5);
-        rowNext.appendChild(rowData6);
-        rowNext.appendChild(rowData8);
 
         tbody.appendChild(rowNext);
+    } else {
+        for (let i = 0; i < chair.length; i++) {
+            let chr = chair[i];
+
+            let rowNext = document.createElement('tr');
+            let rowData1 = document.createElement('td');
+            rowData1.innerHTML = chr.id;
+            rowData1.id
+            let rowData2 = document.createElement('td');
+            rowData2.innerHTML = chr.name;
+            let rowData3 = document.createElement('td');
+            rowData3.innerHTML = chr.abbreviation;
+            let rowData4 = document.createElement('td');
+            rowData4.innerHTML = chr.description;
+            let rowData5 = document.createElement('td');
+            rowData5.innerHTML = chr.dateOfDepartmentCreation;
+
+            let rowData6 = document.createElement('td');
+            let btnUpdate = document.createElement("button");
+            const textUpd = document.createTextNode("Редактировать");
+            btnUpdate.appendChild(textUpd);
+            btnUpdate.onclick = function () {
+                updateFacOrChr(chr, true, fac);
+            };
+            btnUpdate.className = "btn btn-updateDep";
+            rowData6.appendChild(btnUpdate);
+
+            let rowData8 = document.createElement('td');
+            let btnDelete = document.createElement("button");
+            const textDel = document.createTextNode("Удалить");
+            btnDelete.appendChild(textDel);
+            btnDelete.onclick = function () {
+                deleteSub(chr.id, true, fac)
+            };
+            btnDelete.className = "btn btn-delete";
+            rowData8.appendChild(btnDelete);
+
+            rowNext.appendChild(rowData1);
+            rowNext.appendChild(rowData2);
+            rowNext.appendChild(rowData3);
+            rowNext.appendChild(rowData4);
+            rowNext.appendChild(rowData5);
+            rowNext.appendChild(rowData6);
+            rowNext.appendChild(rowData8);
+
+            tbody.appendChild(rowNext);
+        }// попадает всё под else
     }
+    //Надпись в Шапке
+    let title = document.getElementById("header__title");
+    title.textContent = "Кафедры " + fac.name + ":";
+
+    //Кнопка "Обновить Список"
+    let btnUpd = document.getElementById("btn btn-update");
+    btnUpd.textContent = "< Факультеты";
+
     //Кнопка "Добавить Кафедру" онКлац
-    let btnUpd = document.getElementById("btn btn-add");
-    btnUpd.textContent = "Добавить Кафедру";
-    document.getElementById("btn btn-add").onclick = function () {
-        addChr(idFac);
+    let btnAdd = document.getElementById("btn btn-add");
+    btnAdd.textContent = "Добавить Кафедру";
+    btnAdd.onclick = function () {
+        addChr(fac);
     };
 }
 
 
 //Кнопка "редактировать"
-async function updateFacOrChr(fac, isChair, idFac) {
+async function updateFacOrChr(facOrChr, isChair, fac) {
     let modalTitle = document.getElementById("modal-title");
     let n = document.getElementById("newName");
     let a = document.getElementById("newAbbreviation");
     let d = document.getElementById("newDescription");
     modalTitle.textContent = "Редактировать:";
 
-    n.value = fac.name;
-    a.value = fac.abbreviation;
-    d.value = fac.description;
+    n.value = facOrChr.name;
+    a.value = facOrChr.abbreviation;
+    d.value = facOrChr.description;
 
     document.getElementById("btnUpd").onclick = function () {
         //Кнопка "Применить" в выпадающем Модел
-        updateSub(fac.id, isChair, idFac)
+        updateSub(facOrChr.id, isChair, fac)
     };
     window.location.href = "FacultyChair.html#openModal";
+
 }
 
 //Кнопка "Добавить Кафедру"
-async function addChr() {
+async function addChr(fac) {
     let modalTitle = document.getElementById("modal-title");
     let n = document.getElementById("newName");
     let a = document.getElementById("newAbbreviation");
@@ -234,14 +274,42 @@ async function addChr() {
     a.value = "";
     d.value = "";
 
+    window.location.href = "FacultyChair.html#openModal";
+
     document.getElementById("btnUpd").onclick = function () {
         //Кнопка "Принять" в выпадающем Модел
-        saveFaculty();
+        saveChair(fac);
     };
-    window.location.href = "FacultyChair.html#openModal";
+}
+//Кнопка "Принять" в форме -> "Добавить Кафедру"
+async function saveChair(outFac) {
+    let jName = document.getElementById("newName");
+    let jAbbreviation = document.getElementById("newAbbreviation");
+    let jDescription = document.getElementById("newDescription");
+
+    let fac = {
+        name: jName.value,
+        abbreviation: jAbbreviation.value,
+        description: jDescription.value
+    };
+    console.log(JSON.stringify(fac));
+    const response = await fetch(url + 'subdivision/faculty/AddChair?idFaculty=' + outFac.id, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(fac)
+    });
+    jName.value = '';
+    jAbbreviation.value = '';
+    jDescription.value = '';
+
+    window.location.href = (location.href + "#close");
+
+    console.log(response);
+    getChair(outFac);
 }
 
-//Кнопка "Добавить Факультет" /////////////////////////////////// тут додумать
+
+//Кнопка "Добавить Факультет"
 async function addFac() {
     let modalTitle = document.getElementById("modal-title");
     let n = document.getElementById("newName");
@@ -253,11 +321,12 @@ async function addFac() {
     a.value = "";
     d.value = "";
 
+    window.location.href = "FacultyChair.html#openModal";
+
     document.getElementById("btnUpd").onclick = function () {
         //Кнопка "Принять" в выпадающем Модел
         saveFaculty();
     };
-    window.location.href = "FacultyChair.html#openModal";
 }
 
 //Кнопка "Принять" в форме -> "Добавить Факультет"
