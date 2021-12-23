@@ -31,7 +31,10 @@ async function deleteSub(id, isChair, fac) {
         method: 'DELETE',
         headers: {'Accept': 'charset=UTF-8'}
     });
-    console.log(response);
+    //поймать ошибку и вывести кудато в модл
+    let error = await response.json();
+    console.log(error.valueText);
+    //
     updateTheList(isChair, fac);
 }
 
