@@ -139,7 +139,7 @@ async function saveDepartment() {
         description: jDescription.value
     };
 
-    console.log(JSON.stringify(dep) );
+    console.log(JSON.stringify(dep));
 
     const response = await fetch(url + 'subdivision/Department/save', {
         method: 'PUT',
@@ -176,3 +176,5 @@ async function btnUpdateDep(dep) {
         updateSub(dep.id)
     };
 }
+
+//export {getDepartments, addDep, saveDepartment, btnUpdateDep}

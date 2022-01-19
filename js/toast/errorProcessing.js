@@ -1,6 +1,7 @@
-export function errorProcessing(response, message) {
+async function errorProcessing(response, message) {
+    console.log("WIN")
     if (response.status >= 400) {
-        const answer = response.json()
+        const answer = await response.json()
         new Toast({
             title: 'Ошибка',
             text: answer.valueText,

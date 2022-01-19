@@ -1,4 +1,4 @@
-import {errorProcessing} from "./toast/errorProcessing.js";
+//import {getDepartments, addDep, saveDepartment, btnUpdateDep} from "./Departments.js"
 var url = 'http://178.150.196.140:8085/HumanResourcesDepartment/';
 
 //Кнопка "Применить" в выпадающем Модел в "Редактировать"
@@ -31,7 +31,8 @@ async function deleteSub(id, isChair, fac) {//'http://localhost:8080/'
         method: 'DELETE',
         headers: {'Content-Type': 'charset=UTF-8'}
     });
-    errorProcessing(response, "qweqwe")
+    errorProcessing(response, "sad")
+
 
     updateTheList(isChair, fac);
 }
