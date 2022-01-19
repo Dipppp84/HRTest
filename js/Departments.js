@@ -6,9 +6,7 @@ getDepartments();
 async function getDepartments() {
     const response = await fetch(url + 'subdivision/department/getDepartment', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'charset=UTF-8',
-        }
+        headers: {'Content-Type': 'charset=UTF-8'}
     });
     const departments = await response.json()
 
@@ -85,7 +83,7 @@ async function getDepartments() {
             btnDelete.appendChild(textDel);
             btnDelete.onclick = function () {
                 deleteSub(dep.id)
-                getDepartments();
+                //getDepartments();
             };
             btnDelete.className = "btn btn-delete";
             rowData7.appendChild(btnDelete);

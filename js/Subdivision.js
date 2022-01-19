@@ -1,3 +1,4 @@
+import {errorProcessing} from "./toast/errorProcessing.js";
 var url = 'http://178.150.196.140:8085/HumanResourcesDepartment/';
 
 //Кнопка "Применить" в выпадающем Модел в "Редактировать"
@@ -25,16 +26,13 @@ async function updateSub(id, isChair, idFac) {
     window.location.href = (location.href + "#close");
     updateTheList(isChair, idFac)
 }
-
-async function deleteSub(id, isChair, fac) {
-    const response = await fetch(url + 'subdivision/DeleteSub?id=' + id, {
+async function deleteSub(id, isChair, fac) {//'http://localhost:8080/'
+    const response = await fetch(url + 'subdivision/DeleteSub?id=' + 0, {
         method: 'DELETE',
-        headers: {'Accept': 'charset=UTF-8'}
+        headers: {'Content-Type': 'charset=UTF-8'}
     });
-    //поймать ошибку и вывести кудато в модл
-    let error = await response.json();
-    console.log(error.valueText);
-    //
+    errorProcessing(response, "qweqwe")
+
     updateTheList(isChair, fac);
 }
 
@@ -42,8 +40,9 @@ async function deleteSub(id, isChair, fac) {
 async function updateTheList(isChair, fac) {
     if (isChair == true)
         getChair(fac);
-    else if (location.pathname == '/HRTest/Departments.html')
+    else if (location.pathname == '/HRTest/Departments.html') {
         getDepartments();
+    }
     else if (location.pathname == '/HRTest/FacultyChair.html')
         getFaculty();
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/left-nav-style.css">
     <link rel="stylesheet" href="css/modalForm.css">
     <link rel="stylesheet" href="css/table.css">
+    <link href="css/toast.css" rel="stylesheet">
 </head>
 <body>
 <input type="checkbox" id="nav-toggle" hidden>
@@ -38,21 +39,8 @@
         </div>
     </div>
 </div>
+
 <main role="main">
-    <!--<article>
-        <header>
-            <h1 class="header__title">Добавить Отдел:</h1>
-        </header>
-        <section>
-            <div>
-                <input type="text" id="jName" placeholder="name">
-                <input type="text" id="jAbbreviation" placeholder="abbreviation">
-                <input type="text" id="jDescription" placeholder="description">
-                <button class="btn btn-add" onclick=saveDepartment()>Добавать</button>
-            </div>
-        </section>
-        <hr>
-    </article>-->
     <article>
         <header>
             <h1 class="header__title">Отделы:</h1>
@@ -65,7 +53,11 @@
         <hr>
     </article>
 </main>
+
+<script src="js/toast/toast.js"></script>
 <script src="js/Departments.js"></script>
-<script src="js/Subdivision.js"></script>
+<script type="module" src="js/Subdivision.js"></script>
+<script src="js/toast/errorProcessing.js"></script>
+
 </body>
 </html>
