@@ -135,7 +135,7 @@ async function getChair(fac) {
     });
     const chair = await response.json();
 
-    console.log(chair);
+    //console.log(chair);
 
     let table = document.createElement('table');
     let thead = document.createElement('thead');
@@ -292,7 +292,7 @@ async function saveChair(outFac) {
         abbreviation: jAbbreviation.value,
         description: jDescription.value
     };
-    console.log(JSON.stringify(fac));
+    //console.log(JSON.stringify(fac));
     const response = await fetch(url + 'subdivision/faculty/AddChair?idFaculty=' + outFac.id, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -303,8 +303,8 @@ async function saveChair(outFac) {
     jDescription.value = '';
 
     window.location.href = (location.href + "#close");
+    errorProcessing(response, "Кафедра добавлена");
 
-    console.log(response);
     getChair(outFac);
 }
 
@@ -340,19 +340,17 @@ async function saveFaculty() {
         abbreviation: jAbbreviation.value,
         description: jDescription.value
     };
-    console.log(jName, jAbbreviation, jDescription);
-    console.log(JSON.stringify(fac));
     const response = await fetch(url + 'subdivision/faculty/save', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(fac)
     });
+
     jName.value = '';
     jAbbreviation.value = '';
     jDescription.value = '';
 
     window.location.href = (location.href + "#close");
-
-    console.log(response);
+    errorProcessing(response, "Факультет добавлен")
     getFaculty();
 }

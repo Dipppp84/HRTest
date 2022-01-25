@@ -5,6 +5,13 @@
     <title>Демо ОК</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/left-nav-style.css">
+
+    <link rel="stylesheet" href="css/modalForm.css">
+
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/SplitLeftRight.css">
+
 </head>
 <body>
 
@@ -25,22 +32,57 @@
     </ul>
 </nav>
 
+<div id="openModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Добавить нового сотрудника:</h3>
+                <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+                <input type="text" id="familyName" placeholder="familyName">
+                <input type="text" id="firstName" placeholder="firstName">
+                <input type="text" id="middleName" placeholder="middleName">
+                <br><br><input type="date" id="dateOfBirth">
+                Пол:
+                <label><input type="radio" name="sex" value="false" checked> Мужской</label>
+                <label><input type="radio" name="sex" value="true"> Женский</label>
+
+                <br>
+                <button style="float: right" id="btnUpd" class="btn btn-add">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <main role="main">
     <article>
         <header>
-            <h1 class="header__title">Сотрудники:</h1>
+            <h1 class="header__title">Выберите Отдел, Факультет, Кафедру:</h1>
         </header>
         <section>
-            <div id="Employees">
-
+            <div>
+                <button id="getEmpDepartments" class="btn btn-update" onclick="getEmpDepartments()">Отделы</button>
+                <button id="getEmpFaculty" class="btn btn-update" onclick="getEmpFaculty()">Факультеты</button>
+                <button id="getAllChair" class="btn btn-update" onclick="getAllChair()">Все кафедры</button>
             </div>
-            <button class="btn btn-update" onclick="getEmployees()">Обновить таблицу</button>
-            <script src="js/Employees.js"></script>
+            <div>
+                <button style="display: none" id="btnAddEmp" class="btn btn-add">Добавить Сотрудника</button>
+            </div>
 
+            <div class="left" id="Departments"></div><!--Сюда вывожу и список сотрудников -->
+            <div class="right" id="EmployeesData"></div>
 
         </section>
-        <hr>
+        <!--
+               <hr>
+        -->
     </article>
 </main>
+<script src="js/toast/toast.js"></script>
+<script src="js/toast/errorProcessing.js"></script>
+<script src="js/Employees.js"></script>
 </body>
 </html>

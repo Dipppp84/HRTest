@@ -1,5 +1,4 @@
 async function errorProcessing(response, message) {
-    console.log("WIN")
     if (response.status >= 400) {
         const answer = await response.json()
         new Toast({
@@ -9,7 +8,9 @@ async function errorProcessing(response, message) {
             autohide: true,
             interval: 3_000
         });
-    } else if (response.status === 200) {
+    } else if ((response.status === 200 || response.status === 201) && message == null) {
+        //Пока не придумал что делать =)
+    } else if (response.status === 200 || response.status === 201) {
         new Toast({
             title: false,
             text: message,

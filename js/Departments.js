@@ -100,7 +100,7 @@ async function getDepartments() {
         }
     }
 
-    //Кнопка "Добавить Факультет"
+    //Кнопка "Добавить Отдел"
     let btnAdd = document.getElementById("btn btn-add");
     btnAdd.onclick = function () {
         addDep();
@@ -139,8 +139,6 @@ async function saveDepartment() {
         description: jDescription.value
     };
 
-    console.log(JSON.stringify(dep));
-
     const response = await fetch(url + 'subdivision/Department/save', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -152,8 +150,7 @@ async function saveDepartment() {
     jDescription.value = '';
 
     window.location.href = (location.href + "#close");
-
-    console.log(response);
+    errorProcessing(response, "Отдел добавлен")
     getDepartments();
 }
 
@@ -176,5 +173,3 @@ async function btnUpdateDep(dep) {
         updateSub(dep.id)
     };
 }
-
-//export {getDepartments, addDep, saveDepartment, btnUpdateDep}

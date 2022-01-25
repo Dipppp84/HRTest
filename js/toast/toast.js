@@ -7,12 +7,12 @@
 class Toast {
     constructor(params) {
         this._title = params['title'] === false ? false : params['title'] || 'Title';
-        console.log(this._title);
+        //console.log(this._title);
         this._text = params['text'] || 'Message...';
         this._theme = params['theme'] || 'default';
         this._autohide = params['autohide'] && true;
         this._interval = +params['interval'] || 5000;
-        console.log(this._title);
+        //console.log(this._title);
         this._create();
         this._el.addEventListener('click', (e) => {
             if (e.target.classList.contains('toast__close')) {

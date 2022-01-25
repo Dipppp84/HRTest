@@ -1,4 +1,3 @@
-//import {getDepartments, addDep, saveDepartment, btnUpdateDep} from "./Departments.js"
 var url = 'http://178.150.196.140:8085/HumanResourcesDepartment/';
 
 //Кнопка "Применить" в выпадающем Модел в "Редактировать"
@@ -13,27 +12,21 @@ async function updateSub(id, isChair, idFac) {
         abbreviation: a.value,
         description: d.value
     };
-    console.log(id, document.getElementById("newName").value,
-        document.getElementById("newAbbreviation").value,
-        document.getElementById("newDescription").value);
-    console.log(JSON.stringify(dep));
     const response = await fetch(url + 'subdivision/UpdateSub', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dep)
     });
-    console.log(response);
+    errorProcessing(response, "Изменено")
     window.location.href = (location.href + "#close");
     updateTheList(isChair, idFac)
 }
 async function deleteSub(id, isChair, fac) {//'http://localhost:8080/'
-    const response = await fetch(url + 'subdivision/DeleteSub?id=' + 0, {
+    const response = await fetch(url + 'subdivision/DeleteSub?id=' + id, {
         method: 'DELETE',
         headers: {'Content-Type': 'charset=UTF-8'}
     });
-    errorProcessing(response, "sad")
-
-
+    errorProcessing(response, "Удалено")
     updateTheList(isChair, fac);
 }
 
