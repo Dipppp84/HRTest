@@ -279,10 +279,78 @@ async function getAllChair() {
     }
 }
 
+async function removeEmployee(dep, emp) {
+    const response = await fetch(url + 'subdivision/removeEmployee?idDepartment=' + dep.id + '&idEmployee=' + emp.id, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'charset=UTF-8'}
+    });
+    errorProcessing(response, "Удалён: " + fullName(emp));
+    getAllEmployees(dep);
+}
+
+function orderSelect(value) {
+    console.log(value);
+    let startActionDiv = document.getElementById("startActionDiv");
+    let endOfActionLabel = document.getElementById("endOfActionLabel");
+
+    if (value === "FastDismissal") {
+        startActionDiv.hidden = true;
+        endOfActionLabel.innerText = "Дата уволнения";
+    }
+    if (value === "FastHiring") {
+        startActionDiv.hidden = false;
+        endOfActionLabel.innerText = "Конец действиядействия приказа";
+    }
+}
+
+function getModalFastOrders(emp, dep, lb) {
+    //let postData = document.getElementById("postData");
+    window.location.href = location.pathname + "#openModalOrder";
+
+    let btnUpdOrder = document.getElementById("btnUpdOrder");
+    btnUpdOrder.onclick = function () {
+        if (lb == null)
+            console.log("lb === null")
+        else {
+            let orderSelectValue = document.getElementById("orderSelect").value;
+            if (orderSelectValue === "FastDismissal") {
+                let idEmployee = emp.id,
+                    idLaborContract = lb.id;//long
+                let numberOrder = document.getElementById("numberOrder").value;//string
+                let reason = {reasonString: document.getElementById("reason").value};//json
+                let endOfAction = document.getElementById("endOfAction").value,
+                    dateOfOrder = document.getElementById("dateOfOrder").value;
+console.log(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder)
+                fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason);
+            }
+        }
+
+    }
+}
+
+async function fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason) {
+    let fastOrder = {
+        numberOrder: numberOrder,
+        endOfAction: endOfAction,
+        dateOfOrder: dateOfOrder,
+        reason: reason
+    }
+    console.log(idLaborContract)
+    const response = await fetch('http://localhost:8080/' + 'createOrder/FastDismissal?idEmployee=' + idEmployee +
+        '&idLaborContract=' + idLaborContract, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(fastOrder)
+    });
+    //errorProcessing(response, "fastDismissal")
+    console.log(fastOrder);
+    errorProcessing(response, "Done")
+}
+
 async function getAllEmployees(dep) {
     let btnAddEmp = document.getElementById("btnAddEmp");
     btnAddEmp.style.display = "inline";
-    btnAddEmp.onclick = function (){
+    btnAddEmp.onclick = function () {
         window.location.href = location.pathname + "#openModal";
     }
 
@@ -353,15 +421,22 @@ async function getAllEmployees(dep) {
             rowData2.innerHTML = emp.id;
 
             let rowData3 = document.createElement('td');
-            let familyName = emp.familyName == null ? "" : emp.familyName;
-            let firstName = emp.firstName == null ? "" : emp.firstName;
-            let middleName = emp.middleName == null ? "" : emp.middleName;
-            rowData3.innerHTML = familyName + " " + firstName + " " + middleName;
+            rowData3.innerHTML = fullName(emp);
 
             let rowData4 = document.createElement('td');
             rowData4.innerHTML = laborContracts[i].laborContractType;
 
             let rowData5 = document.createElement('td');
+            let btnOrder = document.createElement("button");
+            const textOrder = document.createTextNode("Приказы");
+            btnOrder.appendChild(textOrder);
+            btnOrder.onclick = function () {
+                getModalFastOrders(emp, dep, laborContracts[i]);//// laborContracts
+            };
+            btnOrder.className = "btn btn-order";
+            rowData5.appendChild(btnOrder);
+
+            let rowData6 = document.createElement('td');
             let btnUpdate = document.createElement("button");
             const textUpd = document.createTextNode("Выбрать");
             btnUpdate.appendChild(textUpd);
@@ -369,13 +444,14 @@ async function getAllEmployees(dep) {
                 //getAllEmployees(fac);
             };
             btnUpdate.className = "btn btn-updateDep";
-            rowData5.appendChild(btnUpdate);
+            rowData6.appendChild(btnUpdate);
 
             rowNext.appendChild(rowData1);
             rowNext.appendChild(rowData2);
             rowNext.appendChild(rowData3);
             rowNext.appendChild(rowData4);
             rowNext.appendChild(rowData5);
+            rowNext.appendChild(rowData6);
 
             tbody.appendChild(rowNext);
         }
@@ -391,15 +467,22 @@ async function getAllEmployees(dep) {
             rowData2.innerHTML = emp.id;
 
             let rowData3 = document.createElement('td');
-            let familyName = emp.familyName == null ? "" : emp.familyName;
-            let firstName = emp.firstName == null ? "" : emp.firstName;
-            let middleName = emp.middleName == null ? "" : emp.middleName;
-            rowData3.innerHTML = familyName + " " + firstName + " " + middleName;
+            rowData3.innerHTML = fullName(emp);
 
             let rowData4 = document.createElement('td');
             rowData4.innerHTML = "Черновик";
 
             let rowData5 = document.createElement('td');
+            let btnOrder = document.createElement("button");
+            const textOrder = document.createTextNode("Приказы");
+            btnOrder.appendChild(textOrder);
+            btnOrder.onclick = function () {
+                getModalFastOrders(emp, dep);
+            };
+            btnOrder.className = "btn btn-order";
+            rowData5.appendChild(btnOrder);
+
+            let rowData6 = document.createElement('td');
             let btnUpdate = document.createElement("button");
             const textUpd = document.createTextNode("Выбрать");
             btnUpdate.appendChild(textUpd);
@@ -407,40 +490,65 @@ async function getAllEmployees(dep) {
                 //getAllEmployees(fac);
             };
             btnUpdate.className = "btn btn-updateDep";
-            rowData5.appendChild(btnUpdate);
+            rowData6.appendChild(btnUpdate);
+
+            let rowData7 = document.createElement('td');
+            let btnDelete = document.createElement("button");
+            const textDelete = document.createTextNode("Удалить");
+            btnDelete.appendChild(textDelete);
+            btnDelete.onclick = function () {
+                removeEmployee(dep, emp);
+            };
+            btnDelete.className = "btn btn-delete";
+            rowData7.appendChild(btnDelete);
 
             rowNext.appendChild(rowData1);
             rowNext.appendChild(rowData2);
             rowNext.appendChild(rowData3);
             rowNext.appendChild(rowData4);
             rowNext.appendChild(rowData5);
+            rowNext.appendChild(rowData6);
+            rowNext.appendChild(rowData7);
 
             tbody.appendChild(rowNext);
         }
     }
 
-    //Кнопка Принять в Модальном окне
+    //Кнопка Принять в Модальном окне "Добавить сотрудника"
     let btnUpd = document.getElementById("btnUpd");
-    btnUpd.onclick = function (){
+    btnUpd.onclick = function () {
         window.location.href = location.pathname + "#openModal";
         saveEmp(dep);
     }
 }
 
+//Склеивает ФИО в одно
+function fullName(emp) {
+    let familyName = emp.familyName == null ? "" : emp.familyName;
+    let firstName = emp.firstName == null ? "" : emp.firstName;
+    let middleName = emp.middleName == null ? "" : emp.middleName;
+    let fName = familyName + " " + firstName + " " + middleName;
+    return fName;
+}
+
 //Кнопка Принять в Модальном окне
-async function saveEmp(dep){
+async function saveEmp(dep) {
     let jFamilyName = document.getElementById("familyName");
     let jFirstName = document.getElementById("firstName");
     let jMiddleName = document.getElementById("middleName");
-    let jSex = document.getElementsByName("sex");
     let jDateOfBirth = document.getElementById("dateOfBirth");
+    let jSex = document.getElementsByName("sex");
 
+    let check;
+    for (let i = 0; i < jSex.length; i++)
+        if (jSex[i].checked)
+            check = jSex[i].value;
 
     let emp = {
         familyName: jFamilyName.value,
         firstName: jFirstName.value,
         middleName: jMiddleName.value,
-        sex: jSex.value,
+        sex: check,
         dateOfBirth: jDateOfBirth.value
     };
     console.log(JSON.stringify(emp));
@@ -450,7 +558,6 @@ async function saveEmp(dep){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(emp)
     });
-
     jFamilyName.value = '';
     jFirstName.value = '';
     jMiddleName.value = '';

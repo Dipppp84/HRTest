@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title>Демо ОК</title>
@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/left-nav-style.css">
 
     <link rel="stylesheet" href="css/modalForm.css">
+    <link rel="stylesheet" href="css/modalFormOrder.css">
 
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/toast.css">
@@ -56,6 +57,45 @@
     </div>
 </div>
 
+<div id="openModalOrder" class="modalOrder">
+    <div class="modalOrder-dialog">
+        <div class="modalOrder-content">
+            <div class="modalOrder-header">
+                <h3 id="modalOrder-title" class="modalOrder-title">Создание быстрого приказа:</h3>
+                <a href="#closeOrder" title="CloseOrder" class="closeOrder">×</a>
+            </div>
+            <div id="modalOrder-body" class="modalOrder-body">
+                <label for="orderSelect">Выберите тип приказ:</label>
+                <select id="orderSelect" onchange="orderSelect(value)">
+                    <option value="FastHiring">Наем на работу</option>
+                    <option value="FastDismissal">Увольнение</option>
+                </select><br>
+
+                <label for="reason">Причина:</label><br>
+                <textarea id="reason" rows="15" cols="60" placeholder="Причина"></textarea>
+                <div>
+                    <label for="numberOrder">Номер приказа:</label>
+                    <br><input type="text" id="numberOrder" placeholder="Номер приказа">
+                </div>
+
+                <div>
+                    <label for="dateOfOrder" id="dateOfOrderLabel">Дата приказа</label>
+                    <br><input type="date" id="dateOfOrder">
+                </div>
+                <div id="startActionDiv">
+                    <label for="startAction" id="startActionLabel">Дата начала приказа</label>
+                    <br><input type="date" id="startAction">
+                </div>
+                <div>
+                    <label for="endOfAction" id="endOfActionLabel">Конец действиядействия приказа</label>
+                    <br><input type="date" id="endOfAction">
+                </div>
+                <br>
+                <button style="float: right" id="btnUpdOrder" class="btn btn-add">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <main role="main">
     <article>

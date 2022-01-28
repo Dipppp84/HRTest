@@ -161,6 +161,11 @@ a {
     color: #006935 !important;
     background-color: transparent;
 }
+.btn-order {/*Приказы*/
+    border: 2px solid rgba(23, 65, 159, 0.82);
+    color: #00695c!important;
+    background-color: transparent;
+}
 input[type="text"] {
     border: 1px solid black;
     border-radius: 7px;

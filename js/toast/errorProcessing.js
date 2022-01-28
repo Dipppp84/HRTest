@@ -6,7 +6,7 @@ async function errorProcessing(response, message) {
             text: answer.valueText,
             theme: 'danger',
             autohide: true,
-            interval: 3_000
+            interval: 30_000
         });
     } else if ((response.status === 200 || response.status === 201) && message == null) {
         //Пока не придумал что делать =)
@@ -16,7 +16,7 @@ async function errorProcessing(response, message) {
             text: message,
             theme: 'success',
             autohide: true,
-            interval: 3_000
+            interval: 30_000
         });
     } else {
         new Toast({
@@ -24,7 +24,7 @@ async function errorProcessing(response, message) {
             text: "Что-то пошло не так",
             theme: 'warning',
             autohide: true,
-            interval: 3_000
+            interval: 30_000
         });
     }
 }
