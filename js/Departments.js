@@ -103,6 +103,7 @@ async function getDepartments() {
     //Кнопка "Добавить Отдел"
     let btnAdd = document.getElementById("btn btn-add");
     btnAdd.onclick = function () {
+        console.log("btn btn-add");
         addDep();
     };
 }
@@ -138,7 +139,7 @@ async function saveDepartment() {
         abbreviation: jAbbreviation.value,
         description: jDescription.value
     };
-
+    console.log(JSON.stringify(dep));
     const response = await fetch(url + 'subdivision/Department/save', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},

@@ -310,7 +310,7 @@ function getModalFastOrders(emp, dep, lb) {
     let btnUpdOrder = document.getElementById("btnUpdOrder");
     btnUpdOrder.onclick = function () {
         if (lb == null)
-            console.log("lb === null")
+            console.log("lb == null")
         else {
             let orderSelectValue = document.getElementById("orderSelect").value;
             if (orderSelectValue === "FastDismissal") {
@@ -320,7 +320,7 @@ function getModalFastOrders(emp, dep, lb) {
                 let reason = {reasonString: document.getElementById("reason").value};//json
                 let endOfAction = document.getElementById("endOfAction").value,
                     dateOfOrder = document.getElementById("dateOfOrder").value;
-console.log(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder)
+                console.log(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder)
                 fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason);
             }
         }
@@ -335,15 +335,15 @@ async function fastDismissal(idEmployee, idLaborContract, numberOrder, endOfActi
         dateOfOrder: dateOfOrder,
         reason: reason
     }
-    console.log(idLaborContract)
-    const response = await fetch('http://localhost:8080/' + 'createOrder/FastDismissal?idEmployee=' + idEmployee +
+    console.log("idEmployee " + idEmployee + "\nidLaborContract " + idLaborContract)
+    console.log(JSON.stringify(fastOrder));
+    //http://localhost:8080/HumanResourcesDepartment_war/
+    const response = await fetch("http://localhost:8080/HumanResourcesDepartment_war/" + 'createOrder/FastDismissal?idEmployee=' + idEmployee +
         '&idLaborContract=' + idLaborContract, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(fastOrder)
     });
-    //errorProcessing(response, "fastDismissal")
-    console.log(fastOrder);
     errorProcessing(response, "Done")
 }
 
