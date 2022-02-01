@@ -288,44 +288,92 @@ async function removeEmployee(dep, emp) {
     getAllEmployees(dep);
 }
 
+//получает список должностей и добавляет в выпадающий список
+async function getPost() {
+    const response = await fetch(url + '/labor/getPost', {
+        method: 'POST',
+        headers: {'Content-Type': 'charset=UTF-8'}
+    });
+    errorProcessing(response);
+    let post = await response.json();
+
+    let postSelect = document.getElementById("postSelect");
+    postSelect.innerHTML = '';
+    for (let i = 0; i < post.length; i++) {
+        let option = document.createElement("option");
+        option.value = post[i].id;
+        option.innerText = post[i].name;
+        postSelect.appendChild(option);
+    }
+}
+
+//выпидающий список выбора, изменяет модальное окно от выбраного приказа
 function orderSelect(value) {
     console.log(value);
     let startActionDiv = document.getElementById("startActionDiv");
     let endOfActionLabel = document.getElementById("endOfActionLabel");
+    let postSelectDiv = document.getElementById("postSelectDiv");
 
     if (value === "FastDismissal") {
         startActionDiv.hidden = true;
+        postSelectDiv.hidden = true;
         endOfActionLabel.innerText = "Дата уволнения";
     }
     if (value === "FastHiring") {
         startActionDiv.hidden = false;
+        postSelectDiv.hidden = false;
         endOfActionLabel.innerText = "Конец действиядействия приказа";
     }
 }
 
+//Открывает модальное окно для ввода данных для приказа
 function getModalFastOrders(emp, dep, lb) {
-    //let postData = document.getElementById("postData");
+    getPost();
     window.location.href = location.pathname + "#openModalOrder";
 
+    //Слушает кнопку принять, меняет тип запроса от выбраного приказа
     let btnUpdOrder = document.getElementById("btnUpdOrder");
     btnUpdOrder.onclick = function () {
-        if (lb == null)
-            console.log("lb == null")
-        else {
-            let orderSelectValue = document.getElementById("orderSelect").value;
-            if (orderSelectValue === "FastDismissal") {
-                let idEmployee = emp.id,
-                    idLaborContract = lb.id;//long
-                let numberOrder = document.getElementById("numberOrder").value;//string
-                let reason = {reasonString: document.getElementById("reason").value};//json
-                let endOfAction = document.getElementById("endOfAction").value,
-                    dateOfOrder = document.getElementById("dateOfOrder").value;
-                console.log(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder)
-                fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason);
-            }
-        }
+        let orderSelectValue = document.getElementById("orderSelect").value;
 
+        let idEmployee = emp.id;
+        let numberOrder = document.getElementById("numberOrder").value;//string
+        let reason = {reasonString: document.getElementById("reason").value};//json
+        let endOfAction = document.getElementById("endOfAction").value,
+            dateOfOrder = document.getElementById("dateOfOrder").value;
+
+        if (orderSelectValue === "FastDismissal") {
+            if (lb == null)
+                alert("Нет трудового договора");
+            else {
+                let idLaborContract = lb.id;
+                fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason).then(r => getAllEmployees(dep));
+            }
+        } else if (orderSelectValue === "FastHiring") {
+            let startAction = document.getElementById("startAction").value;
+            let idDepartment = dep.id;
+            let idPost = document.getElementById("postSelect").value;
+            FastHiring(idEmployee, idDepartment, idPost, numberOrder, startAction, endOfAction, dateOfOrder, reason).then(r => getAllEmployees(dep));
+        }
+        window.location.href = (location.href + "#closeOrder");
     }
+}
+
+async function FastHiring(idEmployee, idDepartment, idPost, numberOrder, startAction, endOfAction, dateOfOrder, reason) {
+    let fastOrder = {
+        numberOrder: numberOrder,
+        startAction: startAction,
+        endOfAction: endOfAction,
+        dateOfOrder: dateOfOrder,
+        reason: reason
+    }
+    const response = await fetch(url + 'createOrder/FastHiring?idEmployee=' + idEmployee +
+        '&idPost=' + idPost + '&idDepartment=' + idDepartment, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(fastOrder)
+    });
+    errorProcessing(response, "Готово");
 }
 
 async function fastDismissal(idEmployee, idLaborContract, numberOrder, endOfAction, dateOfOrder, reason) {
@@ -335,16 +383,13 @@ async function fastDismissal(idEmployee, idLaborContract, numberOrder, endOfActi
         dateOfOrder: dateOfOrder,
         reason: reason
     }
-    console.log("idEmployee " + idEmployee + "\nidLaborContract " + idLaborContract)
-    console.log(JSON.stringify(fastOrder));
-    //http://localhost:8080/HumanResourcesDepartment_war/
-    const response = await fetch("http://localhost:8080/HumanResourcesDepartment_war/" + 'createOrder/FastDismissal?idEmployee=' + idEmployee +
+    const response = await fetch(url + 'createOrder/FastDismissal?idEmployee=' + idEmployee +
         '&idLaborContract=' + idLaborContract, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(fastOrder)
     });
-    errorProcessing(response, "Done")
+    errorProcessing(response, "Готово");
 }
 
 async function getAllEmployees(dep) {
@@ -477,7 +522,7 @@ async function getAllEmployees(dep) {
             const textOrder = document.createTextNode("Приказы");
             btnOrder.appendChild(textOrder);
             btnOrder.onclick = function () {
-                getModalFastOrders(emp, dep);
+                getModalFastOrders(emp, dep, null);
             };
             btnOrder.className = "btn btn-order";
             rowData5.appendChild(btnOrder);

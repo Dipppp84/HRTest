@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="css/modalForm.css">
     <link rel="stylesheet" href="css/modalFormOrder.css">
+    <link rel="stylesheet" href="css/modalFormEmployee.css">
 
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/toast.css">
@@ -73,6 +74,12 @@
 
                 <label for="reason">Причина:</label><br>
                 <textarea id="reason" rows="15" cols="60" placeholder="Причина"></textarea>
+                <div id="postSelectDiv">
+                    <label for="postSelect" >Выберите должность:</label>
+                    <select id="postSelect">
+                    </select>
+                </div>
+
                 <div>
                     <label for="numberOrder">Номер приказа:</label>
                     <br><input type="text" id="numberOrder" placeholder="Номер приказа">
@@ -96,6 +103,23 @@
         </div>
     </div>
 </div>
+
+<div id="openModalEmployee" class="modalEmployee">
+    <div class="modalEmployee-dialog">
+        <div class="modalEmployee-content">
+            <div class="modalEmployee-header">
+                <h3 id="modalEmployee-title" class="modalEmployee-title">Данные сотрудника:</h3>
+                <a href="#closeEmployee" title="CloseEmployee" class="closeEmployee">×</a>
+            </div>
+            <div id="modalEmployee-body" class="modalEmployee-body">
+
+                <br>
+                <button style="float: right" id="btnUpdEmployee" class="btn btn-add">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <main role="main">
     <article>
