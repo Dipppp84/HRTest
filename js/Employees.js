@@ -486,7 +486,7 @@ async function getAllEmployees(dep) {
             const textUpd = document.createTextNode("Выбрать");
             btnUpdate.appendChild(textUpd);
             btnUpdate.onclick = function () {
-                //getAllEmployees(fac);
+                getEmployeeInfo(emp);
             };
             btnUpdate.className = "btn btn-updateDep";
             rowData6.appendChild(btnUpdate);
@@ -532,7 +532,7 @@ async function getAllEmployees(dep) {
             const textUpd = document.createTextNode("Выбрать");
             btnUpdate.appendChild(textUpd);
             btnUpdate.onclick = function () {
-                //getAllEmployees(fac);
+                getEmployeeInfo(emp);
             };
             btnUpdate.className = "btn btn-updateDep";
             rowData6.appendChild(btnUpdate);
@@ -565,6 +565,10 @@ async function getAllEmployees(dep) {
         window.location.href = location.pathname + "#openModal";
         saveEmp(dep);
     }
+}
+
+function getEmployeeInfo(emp) {
+    window.location.href = location.pathname + "#openModalEmployee";
 }
 
 //Склеивает ФИО в одно

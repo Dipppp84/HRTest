@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/modalFormEmployee.css">
 
     <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/employeeTable.css">
     <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="css/SplitLeftRight.css">
 
@@ -75,7 +76,7 @@
                 <label for="reason">Причина:</label><br>
                 <textarea id="reason" rows="15" cols="60" placeholder="Причина"></textarea>
                 <div id="postSelectDiv">
-                    <label for="postSelect" >Выберите должность:</label>
+                    <label for="postSelect">Выберите должность:</label>
                     <select id="postSelect">
                     </select>
                 </div>
@@ -112,7 +113,94 @@
                 <a href="#closeEmployee" title="CloseEmployee" class="closeEmployee">×</a>
             </div>
             <div id="modalEmployee-body" class="modalEmployee-body">
-
+                <table class="employee">
+                    <tbody>
+                    <tr>
+                        <td>Фамилия</td>
+                        <td>Имя</td>
+                        <td>Отчество</td>
+                        <td>Личные приказы сотрудника</td>
+                        <td colspan="3" rowspan="2"></td>
+                        <td colspan="3">Фотография</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" rowspan="5"></td>
+                    </tr>
+                    <tr>
+                        <td>Пол</td>
+                        <td></td>
+                        <td>Дата рождения</td>
+                        <td>Список трудовых договоров</td>
+                        <td colspan="3" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>Серия паспорта</td>
+                        <td>№ паспорта</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Приказы трудового договора</td>
+                        <td colspan="3" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>ИНН</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Адрес</td>
+                        <td></td>
+                        <td></td>
+                        <td>Список Отделов где находиться в черновике</td>
+                        <td colspan="3" rowspan="2"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Кто создал</td>
+                        <td></td>
+                        <td>Список созданных сотрудников</td>
+                        <td>Список созданных отделов</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Когда создали</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
                 <br>
                 <button style="float: right" id="btnUpdEmployee" class="btn btn-add">Применить</button>
             </div>
