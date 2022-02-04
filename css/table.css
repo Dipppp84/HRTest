@@ -1,19 +1,19 @@
-table {
+table.general {
     border-spacing: 0;
     empty-cells: hide;
 }
-td {
+table.general td {
     padding: 10px 20px;
     text-align: center;
     border-bottom: 1px solid #F4EEE8;
     transition: all 0.5s linear;
 }
-td:first-child {
+table.general td:first-child {
     text-align: left;
     color: #3D3511;
     font-weight: bold;
 }
-th {
+table.general th {
     padding: 10px 20px;
     color: #3D3511;
     border-bottom: 1px solid #F4EEE8;
@@ -26,7 +26,7 @@ th {
 .round-bottom {
     border-bottom-left-radius: 10px;
 }
-tr:hover td{
+table.general tr:hover td{
     background: #D1C7BF;
     font-weight: bold;
 }

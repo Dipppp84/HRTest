@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/left-nav-style.css">
 
     <link rel="stylesheet" href="css/modalForm.css">
+    <link rel="stylesheet" href="css/modalFormOldEmp.css">
     <link rel="stylesheet" href="css/modalFormOrder.css">
     <link rel="stylesheet" href="css/modalFormEmployee.css">
 
@@ -58,6 +59,27 @@
         </div>
     </div>
 </div>
+
+<div id="openModalOldEmp" class="modalOldEmp">
+    <div class="modalOldEmp-dialog">
+        <div class="modalOldEmp-content">
+            <div class="modalOldEmp-header">
+                <h3 id="modalOldEmp-title" class="modalOldEmp-title">Добавить существующего сотрудника:</h3>
+                <a href="#closeOldEmp" title="Close" class="closeOldEmp">×</a>
+            </div>
+            <div id="modalOldEmp-body" class="modalOldEmp-body">
+                <div style="text-align: center" >
+                <input id="searchEmp"placeholder="Фамилия" type="search">
+                <button id="btnSearchEmp" class="btn btn-updateDep">Поиск</button>
+                </div>
+                <div id="searchEmpTable"></div>
+                <br>
+                <button style="float: right" id="btnUpdOldEmp" class="btn btn-add">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="openModalOrder" class="modalOrder">
     <div class="modalOrder-dialog">
@@ -116,52 +138,85 @@
                 <table class="employee">
                     <tbody>
                     <tr>
-                        <td>Фамилия</td>
-                        <td>Имя</td>
-                        <td>Отчество</td>
+                        <td>Фамилия<br><input type="text" id="familyNameE" class="employee"></td>
+                        <td>Имя<br><input type="text" id="firstNameE" class="employee"></td>
+                        <td>Отчество<br><input type="text" id="middleNameE" class="employee"></td>
                         <td>Личные приказы сотрудника</td>
-                        <td colspan="3" rowspan="2"></td>
-                        <td colspan="3">Фотография</td>
+                        <td colspan="3" rowspan="2">
+                            <div class="employeeInf">
+                                <ol id="ordersE">
+                                    Тут будет список только личный приказов выбраного сотрудника<!---->
+                                </ol>
+                            </div>
+                        </td>
+                        <td colspan="3"></td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td colspan="3" rowspan="5"></td>
+                        <td colspan="3" rowspan="5" id="photo"><img src="1_69.jpg"><br>
+                            <form enctype="multipart/form-data" method="post">
+                                <p>Загрузить фотографию</p>
+                                <p><input type="file" name="photo" multiple accept="image/jpeg">
+                                    <input type="submit" value="Отправить"></p>
+                            </form>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Пол</td>
+                        <td>Пол<br>
+                            <label><input type="radio" name="sexE" value="false" checked>
+                                Мужской</label><br>
+                            <label><input type="radio" name="sexE" value="true"> Женский</label>
+                        </td>
                         <td></td>
-                        <td>Дата рождения</td>
+                        <td>Дата рождения<input type="date" id="dateOfBirthE"></td>
                         <td>Список трудовых договоров</td>
-                        <td colspan="3" rowspan="2"></td>
+                        <td colspan="3" rowspan="2">
+                            <div class="employeeInf">
+                                <ol id="laborContractsE">
+                                    <!---->
+                                </ol>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Серия паспорта</td>
-                        <td>№ паспорта</td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Серия паспорта<br><input type="text" id="passportSeries" class="employee"
+                                                     style="width: 120px"></td>
+                        <td colspan="2">№ паспорта<br><input type="number" id="passportID" class="employee"
+                                                             style="width: 250px"></td>
                         <td>Приказы трудового договора</td>
-                        <td colspan="3" rowspan="2"></td>
+                        <td colspan="3" rowspan="2">
+                            <div class="employeeInf">
+                                <ol id="ordersOfLC">
+                                    Тут будет список приказов выбраного ТД
+                                </ol>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>ИНН</td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2"><input type="number" id="ITN" class="employee" style="width: 250px"></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>Адрес</td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2"><input type="text" id="address" class="employee" style="width: 250px"></td>
                         <td>Список Отделов где находиться в черновике</td>
-                        <td colspan="3" rowspan="2"></td>
+                        <td colspan="3" rowspan="2">
+                            <div class="employeeInf">
+                                <ol id="departmentsE">
+                                    тут Список Отделов где находиться в черновике
+                                </ol>
+                            </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -177,10 +232,16 @@
                     </tr>
                     <tr>
                         <td>Кто создал</td>
-                        <td></td>
+                        <td id="creator"></td>
                         <td>Список созданных сотрудников</td>
                         <td>Список созданных отделов</td>
-                        <td></td>
+                        <td>
+                            <div class="employeeInf">
+                                <ol id="departmentCreatList">
+                                    тут Список созданных отделов
+                                </ol>
+                            </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -189,9 +250,17 @@
                     </tr>
                     <tr>
                         <td>Когда создали</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td id="dateOfCreation"></td>
+                        <td>
+                            <div class="employeeInf">
+                                <ol id="employeeCreatorList">
+                                     тут Список созданных сотрудников
+                                </ol>
+                            </div>
+                        </td>
+                        <td>
+
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -221,7 +290,9 @@
                 <button id="getAllChair" class="btn btn-update" onclick="getAllChair()">Все кафедры</button>
             </div>
             <div>
-                <button style="display: none" id="btnAddEmp" class="btn btn-add">Добавить Сотрудника</button>
+                <button style="display: none" id="btnAddEmp" class="btn btn-add">Добавить нового сотрудника</button>
+                <button style="display: none" id="btnOldAddEmp" class="btn btn-add">Добавить существующего сотрудника</button>
+
             </div>
 
             <div class="left" id="Departments"></div><!--Сюда вывожу и список сотрудников -->

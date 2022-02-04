@@ -1,6 +1,6 @@
 
 /* свойства модального окна по умолчанию */
-.modalEmployee {
+.modalOldEmp {
     position: fixed; /* фиксированное положение */
     top: 0;
     right: 0;
@@ -17,25 +17,25 @@
     padding: 0;
 }
 /* при отображении модального окно */
-.modalEmployee:target {
+.modalOldEmp:target {
     opacity: 1; /* делаем окно видимым */
     pointer-events: auto; /* элемент видим для событий мыши */
     overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
 }
 /* ширина модального окна и его отступы от экрана */
-.modalEmployee-dialog {
+.modalOldEmp-dialog {
     position: relative;
     width: auto;
     margin: 10px;
 }
 @media (min-width: 576px) {
-    .modalEmployee-dialog {
-        max-width: 1240px;
+    .modalOldEmp-dialog {
+        max-width: 750px;
         margin: 30px auto; /* для отображения модального окна по центру */
     }
 }
 /* свойства для блока, содержащего контент модального окна */
-.modalEmployee-content {
+.modalOldEmp-content {
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -54,13 +54,13 @@
     outline: 0;
 }
 @media (min-width: 768px) {
-    .modalEmployee-content {
+    .modalOldEmp-content {
         -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
         box-shadow: 0 5px 15px rgba(0,0,0,.5);
     }
 }
 /* свойства для заголовка модального окна */
-.modalEmployee-header {
+.modalOldEmp-header {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -76,7 +76,7 @@
     padding: 15px;
     border-bottom: 1px solid #eceeef;
 }
-.modalEmployee-title {
+.modalOldEmp-title {
     margin-top: 0;
     margin-bottom: 0;
     line-height: 1.5;
@@ -84,7 +84,7 @@
     font-weight: 500;
 }
 /* свойства для кнопки "Закрыть" */
-.closeEmployee {
+.closeOldEmp {
     float: right;
     font-family: sans-serif;
     font-size: 24px;
@@ -96,15 +96,15 @@
     text-decoration: none;
 }
 /* свойства для кнопки "Закрыть" при нахождении её в фокусе или наведении */
-.closeEmployee:focus, .closeEmployee:hover {
+.closeOldEmp:focus, .closeOldEmp:hover {
     color: #000;
     text-decoration: none;
     cursor: pointer;
     opacity: .75;
 }
 /* свойства для блока, содержащего основное содержимое окна */
-.modalEmployee-body {
-    width: auto;
+.modalOldEmp-body {
+    width: 750px;
     position: relative;
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;

@@ -171,6 +171,26 @@ input[type="text"] {
     border-radius: 7px;
     padding:10px;
 }
+input[type="search"] {
+    border: 1px solid black;
+    border-radius: 7px;
+    padding:10px;
+}
+input.employee[type="text"] {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding:5px;
+    width: 100px;
+}
+input.employee[type="number"] {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding:5px;
+    -moz-appearance: textfield;
+}
+.employee::-webkit-inner-spin-button {
+    display: none;
+}
 /* стилизация содержимого страницы */
 body {
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -180,5 +200,13 @@ body {
     color: #292b2c;
     background-color: #fff;
 }
-
-
+.employeeInf{
+    /*width: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    overflow-x: scroll;*/
+    width: 300px; /* Ширина блока */
+    height: 250px; /* Высота блока */
+    padding: 5px; /* Поля вокруг текста */
+    overflow-y: scroll;
+}

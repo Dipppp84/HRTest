@@ -11,6 +11,7 @@ async function getDepartments() {
     const departments = await response.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 

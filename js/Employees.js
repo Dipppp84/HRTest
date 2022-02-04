@@ -12,6 +12,7 @@ async function getEmpDepartments() {
     const departments = await response.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
@@ -103,6 +104,7 @@ async function getEmpFaculty() {
     const faculties = await response.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
@@ -193,6 +195,7 @@ async function getAllChair() {
     const chairs = await response.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
@@ -393,10 +396,17 @@ async function fastDismissal(idEmployee, idLaborContract, numberOrder, endOfActi
 }
 
 async function getAllEmployees(dep) {
+    //Добавить Нового Сотрудника
     let btnAddEmp = document.getElementById("btnAddEmp");
     btnAddEmp.style.display = "inline";
     btnAddEmp.onclick = function () {
         window.location.href = location.pathname + "#openModal";
+    }
+    //Добавить Существующего Сотрудника
+    let btnOldAddEmp = document.getElementById("btnOldAddEmp");
+    btnOldAddEmp.style.display = "inline";
+    btnOldAddEmp.onclick = function () {
+        window.location.href = location.pathname + "#openModalOldEmp";
     }
 
     const response1 = await fetch(url + '/subdivision/GetLaborContracts', {
@@ -416,6 +426,7 @@ async function getAllEmployees(dep) {
     const employeesDraft = await response2.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
@@ -567,8 +578,60 @@ async function getAllEmployees(dep) {
     }
 }
 
-function getEmployeeInfo(emp) {
+async function getEmployeeInfo(emp) {
+    let familyNameE = document.getElementById("familyNameE");
+    let firstNameE = document.getElementById("firstNameE");
+    let middleNameE = document.getElementById("middleNameE");
+    let sexE = document.getElementsByName("sexE");
+    let dateOfBirthE = document.getElementById("dateOfBirthE");
+    let creator = document.getElementById("creator");
+    let dateOfCreation = document.getElementById("dateOfCreation");
+    familyNameE.value = emp.familyName;
+    firstNameE.value = emp.firstName;
+    middleNameE.value = emp.middleName;
+    if (emp.sex === false)
+        sexE[0].checked = true;
+    else sexE[1].checked = true;
+    dateOfBirthE.value = emp.dateOfBirth;
+    creator.innerText = emp.creator;
+    dateOfCreation.innerText = emp.dateOfCreation;
+    console.log(JSON.stringify(emp));
+
+    let laborContracts = await getLaborContractsEmp(emp);
+
+    console.log(JSON.stringify(laborContracts))
+
+    let laborContractsE = document.getElementById("laborContractsE");
+    laborContractsE.innerHTML = '';
+    if (laborContracts.length === 0) {
+        let li = document.createElement("li");
+        li.innerText = "Пусто";
+        laborContractsE.appendChild(li);
+    } else {
+        for (let i = 0; i < laborContracts.length; i++) {
+            let lb = laborContracts[i];
+            console.log(JSON.stringify(lb))
+            let li = document.createElement("li");
+            li.value = lb.id;
+            li.innerHTML = "Статус: " + lb.laborContractType + ", Должность: " + lb.post.name + ", Начало: " +
+                lb.startOfTheContract + ", конец: " + lb.endToTheContract;
+            laborContractsE.appendChild(li);
+        }
+    }
+
     window.location.href = location.pathname + "#openModalEmployee";
+}
+
+async function getLaborContractsEmp(emp) {
+    const response = await fetch(url + '/employee/GetLaborContracts', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        body: ("idEmployee=" + emp.id)
+    });
+    errorProcessing(response);
+    let laborContracts = await response.json();
+    //console.log(JSON.stringify(laborContractsE))
+    return laborContracts;
 }
 
 //Склеивает ФИО в одно

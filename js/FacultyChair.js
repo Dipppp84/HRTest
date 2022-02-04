@@ -11,6 +11,7 @@ async function getFaculty() {
     const faculties = await response.json()
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
@@ -138,6 +139,7 @@ async function getChair(fac) {
     //console.log(chair);
 
     let table = document.createElement('table');
+    table.className = "general";
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
