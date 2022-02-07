@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/left-nav-style.css">
 
     <link rel="stylesheet" href="css/modalForm.css">
-    <link rel="stylesheet" href="css/modalFormOldEmp.css">
+    <link rel="stylesheet" href="css/modalFormAddOldEmp.css">
     <link rel="stylesheet" href="css/modalFormOrder.css">
     <link rel="stylesheet" href="css/modalFormEmployee.css">
 
@@ -60,26 +60,29 @@
     </div>
 </div>
 
-<div id="openModalOldEmp" class="modalOldEmp">
-    <div class="modalOldEmp-dialog">
-        <div class="modalOldEmp-content">
-            <div class="modalOldEmp-header">
-                <h3 id="modalOldEmp-title" class="modalOldEmp-title">Добавить существующего сотрудника:</h3>
-                <a href="#closeOldEmp" title="Close" class="closeOldEmp">×</a>
+<div id="openModalAddOldEmp" class="modalAddOldEmp">
+    <div class="modalAddOldEmp-dialog">
+        <div class="modalAddOldEmp-content">
+            <div class="modalAddOldEmp-header">
+                <h3 id="modalAddOldEmp-title" class="modalAddOldEmp-title">Добавить существующего сотрудника:</h3>
+                <a href="#closeAddOldEmp" title="CloseAddOldEmp" class="closeAddOldEmp">×</a>
             </div>
-            <div id="modalOldEmp-body" class="modalOldEmp-body">
-                <div style="text-align: center" >
-                <input id="searchEmp"placeholder="Фамилия" type="search">
-                <button id="btnSearchEmp" class="btn btn-updateDep">Поиск</button>
-                </div>
-                <div id="searchEmpTable"></div>
+            <div id="modalAddOldEmp-body" class="modalAddOldEmp-body">
+                <input type="search" id="familyNameAddOldEmp" placeholder="familyName">
+                <input type="search" id="firstNameAddOldEmp" placeholder="firstName">
+                <input type="search" id="middleNameAddOldEmp" placeholder="middleName">
+                <br><br><input type="date" id="dateOfBirthAddOldEmp">
+                Пол:
+                <label><input type="radio" name="sexAddOldEmp" value="null" checked> Любой</label>
+                <label><input type="radio" name="sexAddOldEmp" value="false"> Мужской</label>
+                <label><input type="radio" name="sexAddOldEmp" value="true"> Женский</label>
+                <div><br><button id = "btnSearchEmp" class="btn btn-updateDep">Поиск</button></div>
                 <br>
-                <button style="float: right" id="btnUpdOldEmp" class="btn btn-add">Применить</button>
+                <div id = "tableAddOldEmp"></div>
             </div>
         </div>
     </div>
 </div>
-
 
 <div id="openModalOrder" class="modalOrder">
     <div class="modalOrder-dialog">
@@ -254,7 +257,7 @@
                         <td>
                             <div class="employeeInf">
                                 <ol id="employeeCreatorList">
-                                     тут Список созданных сотрудников
+                                    тут Список созданных сотрудников
                                 </ol>
                             </div>
                         </td>
@@ -291,7 +294,8 @@
             </div>
             <div>
                 <button style="display: none" id="btnAddEmp" class="btn btn-add">Добавить нового сотрудника</button>
-                <button style="display: none" id="btnOldAddEmp" class="btn btn-add">Добавить существующего сотрудника</button>
+                <button style="display: none" id="btnOldAddEmp" class="btn btn-add">Добавить существующего сотрудника
+                </button>
 
             </div>
 

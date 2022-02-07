@@ -406,7 +406,11 @@ async function getAllEmployees(dep) {
     let btnOldAddEmp = document.getElementById("btnOldAddEmp");
     btnOldAddEmp.style.display = "inline";
     btnOldAddEmp.onclick = function () {
-        window.location.href = location.pathname + "#openModalOldEmp";
+        window.location.href = location.pathname + "#openModalAddOldEmp";
+        let btnOldAddEmp = document.getElementById("btnSearchEmp");
+        btnOldAddEmp.onclick = function () {
+            searchEmp(dep);
+        }
     }
 
     const response1 = await fetch(url + '/subdivision/GetLaborContracts', {
@@ -675,6 +679,156 @@ async function saveEmp(dep) {
     jMiddleName.value = '';
 
     window.location.href = (location.href + "#close");
+    errorProcessing(response, "Сотрудник добавлен")
+    getAllEmployees(dep);
+}
+
+async function searchEmp(dep) {
+    let jFamilyName = document.getElementById("familyNameAddOldEmp");
+    let jFirstName = document.getElementById("firstNameAddOldEmp");
+    let jMiddleName = document.getElementById("middleNameAddOldEmp");
+    let jDateOfBirth = document.getElementById("dateOfBirthAddOldEmp");
+    let jSex = document.getElementsByName("sexAddOldEmp");
+
+    let check;
+    for (let i = 0; i < jSex.length; i++)
+        if (jSex[i].checked)
+            check = jSex[i].value;
+    let emp;
+    if (check === null) {
+        emp = {
+            familyName: jFamilyName.value,
+            firstName: jFirstName.value,
+            middleName: jMiddleName.value,
+            dateOfBirth: jDateOfBirth.value
+        };
+    } else {
+        emp = {
+            familyName: jFamilyName.value,
+            firstName: jFirstName.value,
+            middleName: jMiddleName.value,
+            sex: check,
+            dateOfBirth: jDateOfBirth.value
+        };
+    }
+    console.log(JSON.stringify(emp));
+
+    const response = await fetch(url + 'employee/SearchEmployees?beginIndex=' + 0 + '&numberOfRecords=' + 10, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(emp)
+    });
+    errorProcessing(response, "Поиск");
+    const jsonSearchEmp = await response.json();
+    putTableOldEmp(jsonSearchEmp, dep);
+}
+
+function putTableOldEmp(jsonSearchEmp, dep) {
+    console.log(JSON.stringify(jsonSearchEmp));
+
+    let table = document.createElement('table');
+    table.className = "general";
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    let empData = document.getElementById("tableAddOldEmp");
+    empData.innerHTML = '';
+    empData.appendChild(table);
+
+    let row_1 = document.createElement('tr');
+    let heading_1 = document.createElement('th');
+    heading_1.innerHTML = "№";
+    let heading_2 = document.createElement('th');
+    heading_2.innerHTML = "id";
+    let heading_3 = document.createElement('th');
+    heading_3.innerHTML = "ФИО";
+    let heading_4 = document.createElement('th');
+    heading_4.innerHTML = "Пол";
+    let heading_5 = document.createElement('th');
+    heading_5.innerHTML = "Дата рождения";
+
+    row_1.appendChild(heading_1);
+    row_1.appendChild(heading_2);
+    row_1.appendChild(heading_3);
+    row_1.appendChild(heading_4);
+    row_1.appendChild(heading_5);
+
+    thead.appendChild(row_1);
+
+    if (jsonSearchEmp.length === 0 ) {
+        let rowNext = document.createElement('tr');
+        let rowData1 = document.createElement('td');
+        rowData1.textContent = "";
+        let rowData2 = document.createElement('td');
+        rowData2.textContent = "Пусто";
+        rowNext.appendChild(rowData1);
+        rowNext.appendChild(rowData2);
+
+        tbody.appendChild(rowNext);
+    } else {
+        let indexNumber = 1;
+        for (let i = 0; i < jsonSearchEmp.length; i++) {
+            let emp = jsonSearchEmp[i];
+
+            let rowNext = document.createElement('tr');
+            let rowData1 = document.createElement('td');
+            rowData1.innerHTML = indexNumber++;
+
+            let rowData2 = document.createElement('td');
+            rowData2.innerHTML = emp.id;
+
+            let rowData3 = document.createElement('td');
+            rowData3.innerHTML = fullName(emp);
+
+            let rowData4 = document.createElement('td');
+            rowData4.innerHTML = emp.sex;
+
+            let rowData5 = document.createElement('td');
+            rowData5.innerHTML = emp.dateOfBirth;
+
+            let rowData6 = document.createElement('td');
+            let btnUpdate = document.createElement("button");
+            const textUpd = document.createTextNode("Выбрать");
+            btnUpdate.appendChild(textUpd);
+            btnUpdate.onclick = function () {
+                addEmployee(emp,dep);
+            };
+            btnUpdate.className = "btn btn-updateDep";
+            rowData6.appendChild(btnUpdate);
+
+            rowNext.appendChild(rowData1);
+            rowNext.appendChild(rowData2);
+            rowNext.appendChild(rowData3);
+            rowNext.appendChild(rowData4);
+            rowNext.appendChild(rowData5);
+            rowNext.appendChild(rowData6);
+
+            tbody.appendChild(rowNext);
+        }
+    }
+
+}
+
+async function addEmployee(emp,dep){
+    let jFamilyName = document.getElementById("familyNameAddOldEmp");
+    let jFirstName = document.getElementById("firstNameAddOldEmp");
+    let jMiddleName = document.getElementById("middleNameAddOldEmp");
+    let jDateOfBirth = document.getElementById("dateOfBirthAddOldEmp");
+    let jSex = document.getElementsByName("sexAddOldEmp");
+
+    const response = await fetch(url + 'subdivision/addEmployee?idDepartment=' + dep.id + '&idEmployee=' + emp.id, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+    });
+    jFamilyName.value = '';
+    jFirstName.value = '';
+    jMiddleName.value = '';
+    jDateOfBirth.value = '';
+    jSex[0].checked = true;
+
+    window.location.href = (location.href + "#closeAddOldEmp");
     errorProcessing(response, "Сотрудник добавлен")
     getAllEmployees(dep);
 }
